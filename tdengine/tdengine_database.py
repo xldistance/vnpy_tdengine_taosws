@@ -330,7 +330,8 @@ class TdEngineDatabase(BaseDatabase):
         self,
         symbol: str,
         exchange: Exchange,
-        interval: Interval
+        interval: Interval,
+        end: "datetime"
     ) -> int:
         """删除K线数据"""
         # 生成数据表名
@@ -338,7 +339,7 @@ class TdEngineDatabase(BaseDatabase):
         
         # 查询数据条数
         try:
-            result = self.conn.query(f"select count(*) from {table_name}")
+            result = self.conn.query(f"select count(*) from {table_name} where datetime < '{end}'")
             result_list: list = list(result)
             count: int = int(result_list[0][0])
         except Exception:
@@ -346,7 +347,7 @@ class TdEngineDatabase(BaseDatabase):
         
         # 执行K线删除
         try:
-            self.conn.execute(f"DROP TABLE {table_name}")
+            self.conn.execute(f"DELETE FROM {table_name} WHERE datetime < '{end}'")
         except Exception:
             pass
         
@@ -355,7 +356,8 @@ class TdEngineDatabase(BaseDatabase):
     def delete_tick_data(
         self,
         symbol: str,
-        exchange: Exchange
+        exchange: Exchange,
+        end: "datetime"
     ) -> int:
         """删除tick数据"""
         # 生成数据表名
@@ -363,7 +365,7 @@ class TdEngineDatabase(BaseDatabase):
         
         # 查询数据条数
         try:
-            result = self.conn.query(f"select count(*) from {table_name}")
+            result = self.conn.query(f"select count(*) from {table_name} where datetime < '{end}'")
             result_list: list = list(result)
             count: int = int(result_list[0][0])
         except Exception:
@@ -371,7 +373,7 @@ class TdEngineDatabase(BaseDatabase):
         
         # 删除tick数据
         try:
-            self.conn.execute(f"DROP TABLE {table_name}")
+            self.conn.execute(f"DELETE FROM {table_name} WHERE datetime < '{end}'")
         except Exception:
             pass
         
