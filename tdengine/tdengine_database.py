@@ -54,7 +54,7 @@ class TdEngineDatabase(BaseDatabase):
         self.user: str = SETTINGS["database.user"]
         self.password: str = SETTINGS["database.password"]
         self.host: str = SETTINGS["database.host"]
-        self.port: int = SETTINGS["database.port"]
+        self.port: int = 6041 #SETTINGS["database.port"]
         self.database: str = SETTINGS["database.database"]
         
         # 连接数据库
@@ -295,7 +295,7 @@ class TdEngineDatabase(BaseDatabase):
                     limit_down=row[7],
                     open_price=row[8],
                     high_price=row[9],
-                    low_price=row[4],
+                    low_price=row[10],
                     pre_close=row[11],
                     bid_price_1=row[12],
                     bid_price_2=row[13],
