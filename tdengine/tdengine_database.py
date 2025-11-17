@@ -54,7 +54,7 @@ class TdEngineDatabase(BaseDatabase):
         self.user: str = SETTINGS["database.user"]
         self.password: str = SETTINGS["database.password"]
         self.host: str = SETTINGS["database.host"]
-        self.port: int = 6041 #SETTINGS["database.port"]
+        self.port: int = SETTINGS["database.port"]
         self.database: str = SETTINGS["database.database"]
         
         # 连接数据库
