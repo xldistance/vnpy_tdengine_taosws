@@ -23,4 +23,5 @@ taos -h localhost -P 6030 -u root -pxxx -s "select * from vnpy.s_bar where datet
 **注意**：
 
 * 密码需要紧跟在 `-p` 后面，且无空格。
+* 用taospy库端口走6030，用taos-ws-py库端口用的是taoskeeper里面的端口6041
 
