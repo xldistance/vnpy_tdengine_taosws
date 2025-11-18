@@ -21,12 +21,10 @@ from .tdengine_script import (
     CREATE_BAR_TABLE_SCRIPT,
     CREATE_TICK_TABLE_SCRIPT,
 )
-
 def sanitize_symbol(symbol: str) -> str:
     """修改symbol用于表名"""
     symbol = re.sub(r"[-./]", "_", symbol)
     return symbol
-
 
 def parse_datetime(dt_value) -> datetime:
     """解析datetime值，统一转换为datetime对象"""
@@ -45,7 +43,6 @@ def parse_datetime(dt_value) -> datetime:
     if hasattr(dt_value, 'to_pydatetime'):
         return dt_value.to_pydatetime()
     return dt_value
-
 
 class TdEngineDatabase(BaseDatabase):
     """TDengine数据库接口（使用taosws）- 优化版"""
@@ -1091,28 +1088,3 @@ class TdEngineDatabase(BaseDatabase):
     def __repr__(self) -> str:
         """字符串表示"""
         return f"<TdEngineDatabase {self.host}:{self.port}/{self.database}>"
-
-
-# 以下函数已废弃，保留仅为兼容性
-def generate_bar(bar: BarData) -> str:
-    """将BarData转换为可存储的字符串（已废弃）"""
-    result = (
-        f"('{bar.datetime}', {bar.volume}, {bar.open_interest}, "
-        f"{bar.open_price}, {bar.high_price}, {bar.low_price}, {bar.close_price})"
-    )
-    return result
-
-
-def generate_tick(tick: TickData) -> str:
-    """将TickData转换为可存储的字符串（已废弃）"""
-    result = (
-        f"('{tick.datetime}', '{tick.name}', {tick.volume}, "
-        f"{tick.open_interest}, {tick.last_price}, {tick.last_volume}, "
-        f"{tick.limit_up}, {tick.limit_down}, {tick.open_price}, {tick.high_price}, "
-        f"{tick.low_price}, {tick.pre_close}, "
-        f"{tick.bid_price_1}, {tick.bid_price_2}, {tick.bid_price_3}, {tick.bid_price_4}, {tick.bid_price_5}, "
-        f"{tick.ask_price_1}, {tick.ask_price_2}, {tick.ask_price_3}, {tick.ask_price_4}, {tick.ask_price_5}, "
-        f"{tick.bid_volume_1}, {tick.bid_volume_2}, {tick.bid_volume_3}, {tick.bid_volume_4}, {tick.bid_volume_5}, "
-        f"{tick.ask_volume_1}, {tick.ask_volume_2}, {tick.ask_volume_3}, {tick.ask_volume_4}, {tick.ask_volume_5})"
-    )
-    return result
